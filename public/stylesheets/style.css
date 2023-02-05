@@ -1,0 +1,72 @@
+body {
+  background-color: rgb(196, 48, 15);
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+}
+
+#login-handle,
+#login-password,
+#sign-up-link,
+#login-button,
+#log-out-button {
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: auto;
+  padding-top: 10px;
+  justify-content: flex-end;
+}
+
+#peep-button {
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+#peep-input {
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.peep {
+  border: 10px solid rgb(174, 177, 75);
+  border-radius: 5px;
+  font-size: 22px;
+  padding: 10px;
+  position: relative;
+  margin: 100px;
+}
+
+.delete-button {
+  position: calc();
+  top: 10px;
+  right: 5px;
+  margin: auto;
+}
+
+.like-button {
+  position: calc();
+  top: 10px;
+  right: 5px;
+  margin: auto;
+}
+
+.logo-right {
+  height: 70px;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  margin: auto;
+}
+
+.logo-center {
+  width: 25%;
+  text-align: center;
+}
