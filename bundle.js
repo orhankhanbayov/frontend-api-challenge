@@ -9,18 +9,29 @@
     "src/chitterClient.js"(exports, module) {
       var chitterClient2 = class {
         async createUser(details) {
-          let response = await fetch(
-            "https://chitter-backend-api-v2.herokuapp.com/users",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ user: details })
+          try {
+            let response = await fetch(
+              "https://chitter-backend-api-v2.herokuapp.com/users",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ user: details })
+              }
+            );
+            if (!response.ok) {
+              throw new Error("That handle is already taken, please try again.");
             }
-          );
-          let json = await response.json();
-          return json;
+            if (response.ok) {
+              throw new Error("You have signed up to Chitter");
+            }
+            let json = await response.json();
+            return json;
+          } catch (error) {
+            console.error(error);
+            alert(error.message);
+          }
         }
         async sessions(session) {
           try {
@@ -162,54 +173,14 @@
           newButton.innerText = "Sign Up";
           document.querySelector("body").append(newButton);
           newButton.addEventListener("click", () => {
-            this.displaySignUp();
-          });
-        }
-        displaySignUp() {
-          let body = document.querySelector("body");
-          const handle = document.createElement("input");
-          handle.setAttribute("type", "text");
-          handle.setAttribute("id", "handle");
-          handle.setAttribute("placeholder", "Handle");
-          body.append(handle);
-          const password = document.createElement("input");
-          password.setAttribute("type", "password");
-          password.setAttribute("id", "password");
-          password.setAttribute("placeholder", "Password");
-          body.append(password);
-          const newSignUpButton = document.createElement("BUTTON");
-          newSignUpButton.id = "sign-up-button";
-          newSignUpButton.innerHTML = "Sign up";
-          body.append(newSignUpButton);
-          newSignUpButton.addEventListener("click", () => {
             this.signUp();
-            document.querySelector("#sign-up-link").style.display = "none";
-            document.querySelector("#handle").style.display = "none";
-            document.querySelector("#password").style.display = "none";
-            document.querySelector("#sign-up-button").style.display = "none";
           });
         }
         async signUp() {
-          let username = document.querySelector("#handle").value;
-          let pass = document.querySelector("#password").value;
+          let username = document.querySelector("#login-handle").value;
+          let pass = document.querySelector("#login-password").value;
           let details = { handle: username, password: pass };
           let response = await this.client.createUser(details);
-          if (response.handle === username) {
-            if (!!document.querySelector("#sign-up-error")) {
-              document.querySelector("#sign-up-error").remove();
-            }
-            let newElement = document.createElement("p");
-            newElement.id = "sign-up-success";
-            newElement.textContent = "You have signed up to Chitter";
-            document.querySelector("body").append(newElement);
-            console.log("signed up");
-          } else {
-            let newElement = document.createElement("p");
-            newElement.id = "sign-up-error";
-            newElement.textContent = "Sorry this handle has already been taken";
-            document.querySelector("body").append(newElement);
-            console.log("handle already taken");
-          }
         }
         displayLogin() {
           let body = document.querySelector("body");

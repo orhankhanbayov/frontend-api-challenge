@@ -1,3 +1,7 @@
+//popup form for sign up
+//login throw proper error in client side
+//tests
+
 class chitterView {
   constructor(client, user) {
     this.client = client;
@@ -10,58 +14,15 @@ class chitterView {
     newButton.innerText = "Sign Up";
     document.querySelector("body").append(newButton);
     newButton.addEventListener("click", () => {
-      this.displaySignUp();
-    });
-  }
-
-  displaySignUp() {
-    let body = document.querySelector("body");
-    const handle = document.createElement("input");
-    handle.setAttribute("type", "text");
-    handle.setAttribute("id", "handle");
-    handle.setAttribute("placeholder", "Handle");
-    body.append(handle);
-    const password = document.createElement("input");
-    password.setAttribute("type", "password");
-    password.setAttribute("id", "password");
-    password.setAttribute("placeholder", "Password");
-    body.append(password);
-    const newSignUpButton = document.createElement("BUTTON");
-    newSignUpButton.id = "sign-up-button";
-    newSignUpButton.innerHTML = "Sign up";
-    body.append(newSignUpButton);
-
-    newSignUpButton.addEventListener("click", () => {
       this.signUp();
-      document.querySelector("#sign-up-link").style.display = "none";
-      document.querySelector("#handle").style.display = "none";
-      document.querySelector("#password").style.display = "none";
-      document.querySelector("#sign-up-button").style.display = "none";
     });
   }
 
   async signUp() {
-    let username = document.querySelector("#handle").value;
-    let pass = document.querySelector("#password").value;
+    let username = document.querySelector("#login-handle").value;
+    let pass = document.querySelector("#login-password").value;
     let details = { handle: username, password: pass };
     let response = await this.client.createUser(details);
-    //throw error in client side with the pop up window instead of below
-    if (response.handle === username) {
-      if (!!document.querySelector("#sign-up-error")) {
-        document.querySelector("#sign-up-error").remove();
-      }
-      let newElement = document.createElement("p");
-      newElement.id = "sign-up-success";
-      newElement.textContent = "You have signed up to Chitter";
-      document.querySelector("body").append(newElement);
-      console.log("signed up");
-    } else {
-      let newElement = document.createElement("p");
-      newElement.id = "sign-up-error";
-      newElement.textContent = "Sorry this handle has already been taken";
-      document.querySelector("body").append(newElement);
-      console.log("handle already taken");
-    }
   }
 
   displayLogin() {
@@ -83,7 +44,6 @@ class chitterView {
     body.append(loginButton);
 
     loginButton.addEventListener("click", async () => {
-      // still showing login even if incorrect - add logic to stop this
       await this.login();
       this.loggedInHide();
       this.logInClear();

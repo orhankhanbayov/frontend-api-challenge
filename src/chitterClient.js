@@ -1,19 +1,30 @@
 class chitterClient {
   async createUser(details) {
-    let response = await fetch(
-      "https://chitter-backend-api-v2.herokuapp.com/users",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: details }),
+    try {
+      let response = await fetch(
+        "https://chitter-backend-api-v2.herokuapp.com/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user: details }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("That handle is already taken, please try again.");
       }
-    );
-    let json = await response.json();
-    return json;
-  }
+      if (response.ok) {
+        throw new Error("You have signed up to Chitter");
+      }
 
+      let json = await response.json();
+      return json;
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  }
   async sessions(session) {
     try {
       let response = await fetch(
